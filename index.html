@@ -1,0 +1,345 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Hạ Nguyên 🎀</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#ffe0ef,#fff0f6,#ffd6e8);
+min-height:100vh;
+overflow-x:hidden;
+text-align:center;
+color:#d94c91;
+}
+
+h1{
+font-size:clamp(32px,7vw,55px);
+margin-top:65px;
+text-shadow:2px 3px white;
+animation:beat 2s infinite;
+}
+
+@keyframes beat{
+50%{transform:scale(1.06)}
+}
+
+.subtitle{margin:15px;font-size:18px}
+
+.photo{
+position:fixed;
+top:-250px;
+width:175px;
+height:210px;
+object-fit:cover;
+border:7px solid white;
+border-radius:18px;
+box-shadow:0 5px 20px #e58ab7;
+z-index:2;
+pointer-events:none;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{transform:translateY(130vh) rotate(360deg)}
+}
+
+.decor{
+position:fixed;
+top:-50px;
+z-index:1;
+pointer-events:none;
+animation:decorFall linear forwards;
+}
+
+@keyframes decorFall{
+to{transform:translateY(115vh) rotate(360deg)}
+}
+
+canvas{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:0;
+}
+
+button{
+position:relative;
+z-index:10;
+border:none;
+background:#ff75ad;
+color:white;
+padding:14px 24px;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+margin:12px 5px;
+box-shadow:0 4px 12px #e9a2c5;
+transition:.3s;
+}
+
+button:hover{transform:scale(1.06);background:#ed5297}
+
+.letter{
+display:none;
+position:relative;
+z-index:10;
+background:#fffafd;
+width:min(90%,450px);
+margin:25px auto 40px;
+padding:30px 22px;
+border-radius:25px;
+box-shadow:0 8px 30px #e9a2c5;
+line-height:1.9;
+animation:appear .7s;
+}
+
+.letter h2{margin-bottom:15px}
+
+@keyframes appear{
+from{opacity:0;transform:translateY(25px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.footer{
+position:relative;
+z-index:5;
+margin:40px 0;
+padding-bottom:25px;
+}
+
+@media(max-width:600px){
+.photo{width:110px;height:140px;border-width:5px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<h1>🎀 Happy Birthday 🎀</h1>
+<h2 style="font-size:36px">HẠ NGUYÊN 💗</h2>
+
+<p class="subtitle">
+Chúc cô gái tháng 11 có một ngày sinh nhật thật tuyệt vời! 🌷
+</p>
+
+<p style="margin-top:30px">
+Một món quà nhỏ dành riêng cho Nguyên...
+</p>
+
+<button id="letterBtn" onclick="toggleLetter()">
+💌 Nhấn vào đây để nhận bất ngờ
+</button>
+
+<div class="letter" id="letter">
+<h2>💌 Gửi Hạ Nguyên 💌</h2>
+
+<p>
+Chúc mừng sinh nhật Nguyên! 🎂💗
+<br><br>
+Chúc Nguyên tuổi mới luôn vui vẻ,
+xinh đẹp, đáng yêu và gặp thật nhiều
+điều may mắn trong cuộc sống.
+<br><br>
+Mong rằng mọi điều tốt đẹp nhất
+sẽ đến với Nguyên.
+<br><br>
+Cảm ơn vì đã xuất hiện và mang đến
+những niềm vui thật đặc biệt.
+<br><br>
+Mong Nguyên luôn giữ nụ cười trên môi
+và có thật nhiều kỷ niệm đẹp.
+<br><br>
+Chúc Nguyên có một sinh nhật
+thật đáng nhớ nhé! 🎀💗
+</p>
+
+<h2 style="margin-top:20px">
+Happy Birthday! 🌸
+</h2>
+</div>
+
+<button onclick="toggleMusic()" id="musicBtn">
+🎵 Bật nhạc
+</button>
+
+<div class="footer">
+Made with 💗 by Tiến
+<br>
+🎀 Have a sweet birthday, Hạ Nguyên! 🎀
+</div>
+
+<script>
+
+// 10 ảnh rơi
+const photos=[
+"images/anh1.jpg",
+"images/anh2.jpg",
+"images/anh3.jpg",
+"images/anh4.jpg",
+"images/anh5.jpg",
+"images/anh6.jpg",
+"images/anh7.jpg",
+"images/anh8.jpg",
+"images/anh9.jpg",
+"images/anh10.jpg"
+];
+
+photos.forEach((src,i)=>{
+const img=document.createElement("img");
+img.src=src;
+img.className="photo";
+img.style.left=(i*10)+"%";
+img.style.animationDuration=(12+Math.random()*12)+"s";
+img.style.animationDelay=(-Math.random()*20)+"s";
+document.body.appendChild(img);
+});
+
+// Tim, hoa, nơ rơi
+const decorations=["💗","🌸","🎀","💕","🌷","💖"];
+
+function createDecor(){
+const el=document.createElement("div");
+el.className="decor";
+el.innerHTML=decorations[Math.floor(Math.random()*decorations.length)];
+el.style.left=Math.random()*100+"vw";
+el.style.fontSize=(20+Math.random()*25)+"px";
+el.style.animationDuration=(5+Math.random()*7)+"s";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),12000);
+}
+setInterval(createDecor,350);
+
+// Mở và đóng thư
+function toggleLetter(){
+const letter=document.getElementById("letter");
+const btn=document.getElementById("letterBtn");
+
+if(letter.style.display==="block"){
+letter.style.display="none";
+btn.innerHTML="💌 Nhấn vào đây để nhận bất ngờ";
+}else{
+letter.style.display="block";
+btn.innerHTML="💗 Đóng lá thư";
+letter.scrollIntoView({behavior:"smooth",block:"center"});
+}
+}
+
+// Nhạc nền tự tạo
+let audioContext;
+let musicPlaying=false;
+let musicTimer;
+let noteIndex=0;
+
+const melody=[
+523.25,659.25,783.99,659.25,
+587.33,698.46,783.99,698.46,
+523.25,659.25,783.99,1046.5,
+783.99,698.46,659.25,523.25
+];
+
+function playNote(){
+if(!musicPlaying)return;
+
+const osc=audioContext.createOscillator();
+const gain=audioContext.createGain();
+
+osc.type="sine";
+osc.frequency.value=melody[noteIndex];
+
+gain.gain.setValueAtTime(.0001,audioContext.currentTime);
+gain.gain.exponentialRampToValueAtTime(.1,audioContext.currentTime+.05);
+gain.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+.5);
+
+osc.connect(gain);
+gain.connect(audioContext.destination);
+
+osc.start();
+osc.stop(audioContext.currentTime+.55);
+
+noteIndex=(noteIndex+1)%melody.length;
+}
+
+function toggleMusic(){
+const btn=document.getElementById("musicBtn");
+
+if(!musicPlaying){
+audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();
+audioContext.resume();
+musicPlaying=true;
+playNote();
+musicTimer=setInterval(playNote,450);
+btn.innerHTML="🔇 Tắt nhạc";
+}else{
+musicPlaying=false;
+clearInterval(musicTimer);
+btn.innerHTML="🎵 Bật nhạc";
+}
+}
+
+// Pháo hoa
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+let particles=[];
+
+function resize(){
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+function firework(){
+const x=Math.random()*canvas.width;
+const y=Math.random()*canvas.height*.55;
+const colors=["#ff69a6","#ffb6d9","#ffffff","#f5a0d0"];
+
+for(let i=0;i<45;i++){
+const angle=Math.PI*2*i/45;
+const speed=Math.random()*3+1;
+
+particles.push({
+x,y,
+vx:Math.cos(angle)*speed,
+vy:Math.sin(angle)*speed,
+life:70,
+color:colors[Math.floor(Math.random()*colors.length)]
+});
+}
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+particles.forEach((p,i)=>{
+p.x+=p.vx;
+p.y+=p.vy;
+p.vy+=.025;
+p.life--;
+
+ctx.globalAlpha=p.life/70;
+ctx.fillStyle=p.color;
+ctx.beginPath();
+ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+ctx.fill();
+
+if(p.life<=0)particles.splice(i,1);
+});
+
+ctx.globalAlpha=1;
+requestAnimationFrame(animate);
+}
+
+setInterval(firework,1200);
+animate();
+
+</script>
+</body>
+</html>
